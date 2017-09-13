@@ -181,12 +181,21 @@ export function app(props) {
 
   function patch(parent, element, oldNode, node, isSVG, nextSibling) {
     if (node.tag == null && node.children != null) {
-      var j = 0;
-      node.children.forEach(function(child) {
-        var childElement = parent.childNodes[j]
-        patch(parent, childElement, oldNode, child, isSVG)
-        j++;
+      var nodeLen = node.children.length;
+      var parentLen = parent.childNodes.length;
+      node.children.forEach(function(child, index) {
+        if (index <= parentLen) {
+          var childElement = parent.childNodes[index]
+          patch(parent, childElement, oldNode, child, isSVG)
+        } else {
+          parent.insertBefore(createElement(child, isSVG), null)
+        }
       })
+      while(nodeLen < parentLen) { // need to finish test case for when Fragement diff removes nodes...
+        parent.remove(parent.childNodes[nodeLen])
+        nodeLen++;
+      }
+      element = parent // I think this is right???  or should it just return undefined?
     } else if (oldNode == null) {
       element = parent.insertBefore(createElement(node, isSVG), element)
     } else if (node.tag != null && node.tag === oldNode.tag) {

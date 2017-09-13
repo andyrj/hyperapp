@@ -89,3 +89,39 @@ test("no wrapper div", done => {
     done()
   })
 })
+
+/*
+test("patching Fragment", done => {
+  const emit = app({
+    state: {
+      fragments: [1]
+    },
+    actions: {
+      addFragment: (state) => {
+        var newFragments = state.fragments.slice()
+        newFragments.push(state.fragments.length + 1)
+        return {
+          fragments: newFragments
+        }
+      },
+      removeFragment: (state) => {
+        var newFragments = state.fragments.slice()
+        newFragments.pop()
+        return {
+          fragments: newFragments
+        }
+      }
+    },
+    view: () => {
+      Fragment({
+        list: state.fragments.map((i) => h("div", {}, `Test-${i}`))
+      })
+    },
+    events: {
+      test: (state, actions, data) => {
+        // trigger async call action to add then remove fragements... nested with done at end..
+      }
+    }
+  })
+})
+*/
