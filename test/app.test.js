@@ -67,3 +67,25 @@ test("optional view", done => {
     }
   })
 })
+
+const Fragment = (props, children) => {
+  if (props.list != null) {
+    children = props.list
+  }
+  return { children }
+}
+
+test("no wrapper div", done => {
+  app({
+    view: () => Fragment({}, [
+      h("h1", {}, "Test1"),
+      h("h2", {}, "Test2")
+    ]) 
+  })
+  setTimeout(() => {
+    expect(document.body.innerHTML).toBe(
+      `<h1>Test1</h1><h2>Test2</h2>`
+    )
+    done()
+  })
+})
