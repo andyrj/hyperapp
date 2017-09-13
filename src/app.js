@@ -181,8 +181,11 @@ export function app(props) {
 
   function patch(parent, element, oldNode, node, isSVG, nextSibling) {
     if (node.tag == null && node.children != null) {
+      var j = 0;
       node.children.forEach(function(child) {
-        patch(parent, element, oldNode, child, isSVG)
+        var childElement = parent.childNodes[j]
+        patch(parent, childElement, oldNode, child, isSVG)
+        j++;
       })
     } else if (oldNode == null) {
       element = parent.insertBefore(createElement(node, isSVG), element)
