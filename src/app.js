@@ -9,8 +9,8 @@ export function app(props) {
   var appActions = {}
   var appRoot = props.root || document.body
   var firstChildScript = appRoot.firstChild && appRoot.firstChild.tagName === "SCRIPT"
-  var element = !firstChildScript ? appRoot.children[0] : undefined
-  var node = !firstChildScript ? hydrate(element, [].map) : undefined
+  var element = firstChildScript ? undefined : appRoot.children[0]
+  var node = firstChildScript ? undefined : hydrate(element, [].map)
 
   if (typeof props === "function") {
     return props(app)
