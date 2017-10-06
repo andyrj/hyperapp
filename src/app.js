@@ -8,8 +8,9 @@ export function app(props) {
   var appState = props.state
   var appActions = {}
   var appRoot = props.root || document.body
-  var element = appRoot.children[0]
-  var node = hydrate(element, [].map)
+  var firstChildScript = document.body.firstChild && document.body.firstChild.tagName === "SCRIPT"
+  var element = !firstChildScript ? appRoot.children[0] : undefined
+  var node = !firstChildScript ? hydrate(element, [].map) : undefined
 
   if (typeof props === "function") {
     return props(app)
